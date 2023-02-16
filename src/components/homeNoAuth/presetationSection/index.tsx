@@ -5,9 +5,12 @@ import styles from "./styles.module.scss";
 const PresentationSection = () => {
   return (
     <>
-      <Container>
+      <Container className="py-4">
         <Row>
-          <Col md>
+          <Col
+            md
+            className="d-flex flex-column justify-content-center align-itens-start"
+          >
             <p className={styles.subTitle}>Acesso Ilimitado</p>
             <p className={styles.title}>
               Tenha acesso aos melhores
@@ -33,6 +36,15 @@ const PresentationSection = () => {
               src="/homeNoAuth/imgPresentation.png"
               alt="imgIndex"
               className={styles.imgPresentation}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col className="d-flex justify-content-center pt-5">
+            <img
+              src="/homeNoAuth/iconArrowDown.svg"
+              alt="arrowDown"
+              className={styles.arrowDown}
             />
           </Col>
         </Row>

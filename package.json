@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@next/font": "13.1.6",
+    "@splidejs/react-splide": "^0.7.12",
     "aos": "^2.3.4",
     "axios": "^0.26.1",
     "bootstrap": "^5.1.3",
