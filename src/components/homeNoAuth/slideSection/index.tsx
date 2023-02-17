@@ -1,0 +1,27 @@
+import { CourseType } from "@/src/services/courseService";
+import Link from "next/link";
+import { Button, Container } from "reactstrap";
+import SlideComponent from "../../common/slideComponent";
+import styles from "./styles.module.scss";
+
+interface props {
+  newestCourses: CourseType[];
+}
+
+const SlideSection = ({ newestCourses }: props) => {
+  return (
+    <>
+      <Container className="d-flex flex-column align-items-center py-5">
+        <p className={styles.sectionTitle}>Aulas já disponíveis</p>
+        <SlideComponent course={newestCourses} />
+        <Link href="/register">
+          <Button outline className={styles.slideSectionBtn}>
+            Se cadastre para acessar!
+          </Button>
+        </Link>
+      </Container>
+    </>
+  );
+};
+
+export default SlideSection;

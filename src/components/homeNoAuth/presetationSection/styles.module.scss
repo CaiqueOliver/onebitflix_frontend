@@ -23,9 +23,9 @@
 .btnCta {
   font-weight: bold;
   color: white;
+  position: absolute;
   display: flex;
   align-items: center;
-  text-decoration-color: white;
   gap: 25px;
   padding: 14px 30px;
   border: 2px solid $lightRed;

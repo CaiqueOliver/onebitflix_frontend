@@ -22,7 +22,8 @@ const PresentationSection = () => {
             </p>
             <Link href="/register">
               <Button outline className={styles.btnCta}>
-                Acesse agora{" "}
+                <p>Acesse agora</p>
+
                 <img
                   src="/buttonPlay.svg"
                   alt="buttonImg"
