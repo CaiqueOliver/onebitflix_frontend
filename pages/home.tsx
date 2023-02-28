@@ -1,7 +1,9 @@
-import HeaderAuth from "@/src/components/common/headerAuth";
+import FavoriteCategory from "@/src/components/homeAuth/favoriteCategory";
+import FeaturedCategory from "@/src/components/homeAuth/featuredCategory";
 import FeaturedSection from "@/src/components/homeAuth/featuredSession";
+import ListCategories from "@/src/components/homeAuth/listCategories";
+import NewestCategory from "@/src/components/homeAuth/newestCategory";
 import Head from "next/head";
-import { Container } from "reactstrap";
 
 const HomeAuth = () => {
   return (
@@ -12,6 +14,10 @@ const HomeAuth = () => {
       </Head>
       <main>
         <FeaturedSection />
+        <NewestCategory />
+        <FavoriteCategory />
+        <FeaturedCategory />
+        <ListCategories />
       </main>
     </>
   );
