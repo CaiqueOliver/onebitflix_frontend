@@ -1,5 +1,5 @@
 import categoriesService from "@/src/services/categoriesService";
-import styles from "../../../..//styles/slideCategory/slideCategory.module.scss";
+import styles from "../../../../styles/slideCategory.module.scss";
 import SlideComponent from "../../common/slideComponent";
 import useSWR from "swr";
 
@@ -22,7 +22,8 @@ const ListCategoriesSlide = ({ categoryId, categoryName }: props) => {
   return (
     <>
       <p className={styles.titleCategory}>{categoryName}</p>
-      <SlideComponent course={data.data.courses} />
+      <SlideComponent course={data.data.course} />
+      {console.log(data)}
     </>
   );
 };

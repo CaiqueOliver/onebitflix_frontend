@@ -14,7 +14,7 @@ const FavoriteCategory = () => {
     );
   return (
     <>
-      <p className={styles.tittleCategory}>Minha Lista</p>
+      <p className={styles.titleCategory}>Minha Lista</p>
       {data.data.courses.length >= 1 ? (
         <SlideComponent course={data.data.courses} />
       ) : (
