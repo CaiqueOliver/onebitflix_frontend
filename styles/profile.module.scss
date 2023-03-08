@@ -126,7 +126,51 @@
   padding: 14px 0px;
   &:hover {
     background-color: transparent;
-    border-color: $lightRed;
-    color: $lightGray;
+    border-color: $lightGray;
+    color: $lightRed;
+  }
+  &:active {
+    background-color: transparent;
+    box-shadow: none;
+  }
+  &:focus {
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 991px) {
+  .title {
+    text-align: center;
+  }
+  .btnColumn {
+    width: 100%;
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 767px) {
+  .inputFlexDiv {
+    gap: 20px;
+  }
+  .inputFlex {
+    width: 400px;
+  }
+}
+@media (max-width: 460px) {
+  .title {
+    font-size: 30px;
+    margin-bottom: 10px;
+  }
+  .nameAbbreviation {
+    font-size: 30px;
+    min-height: 60px;
+    min-width: 60px;
+  }
+  .userName {
+    font-size: 25px;
+  }
+  .inputFlex {
+    width: 100%;
   }
 }

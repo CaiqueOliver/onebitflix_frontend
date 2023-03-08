@@ -1,13 +1,67 @@
+import profileService from "@/src/services/profileService";
+import { useRouter } from "next/router";
+import { FormEvent, useEffect, useState } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import styles from "../../../..//styles/profile.module.scss";
+import ToastComponent from "../../common/toast";
 
 const UserForm = () => {
+  const router = useRouter();
+  const [color, setColor] = useState("");
+  const [toastIsOpen, setToastIsOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [initialEmail, setInitialEmail] = useState(email);
+  const [created_at, setCreated_at] = useState("");
+  const date = new Date(created_at);
+  const month = date.toLocaleDateString("default", { month: "long" });
+
+  useEffect(() => {
+    profileService.fetchCurrent().then((user) => {
+      setFirstName(user.firstName);
+      setLastName(user.lastName);
+      setPhone(user.phone);
+      setEmail(user.email);
+      setInitialEmail(user.email);
+      setCreated_at(user.createdAt);
+    });
+  }, []);
+
+  const handleUserUpdate = async function (event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const res = await profileService.userUpdate({
+      firstName,
+      lastName,
+      phone,
+      email,
+      created_at,
+    });
+    if (res === 200) {
+      setToastIsOpen(true);
+      setErrorMessage("Informações alteradas com sucesso!");
+      setColor("bg-success");
+      setTimeout(() => setToastIsOpen(false), 3000);
+      if (email != initialEmail) {
+        sessionStorage.clear();
+        router.push("/");
+      }
+    } else {
+      setToastIsOpen(true);
+      setErrorMessage("Você não pode mudar para este email!");
+      setColor("bg-danger");
+      setTimeout(() => setToastIsOpen(false), 3000);
+    }
+  };
+
   return (
     <>
-      <Form className={styles.form}>
+      <Form onSubmit={handleUserUpdate} className={styles.form}>
         <div className={styles.formName}>
           <p className={styles.nameAbbreviation}>NT</p>
-          <p className={styles.userName}>Name Test</p>
+          <p className={styles.userName}>{`${firstName} ${lastName}`}</p>
         </div>
         <div className={styles.memberTime}>
           <img
@@ -17,7 +71,7 @@ const UserForm = () => {
           />
           <p className={styles.memberTimeText}>
             Membro desde <br />
-            20 de Abril de 2020
+            {`${date.getDate} de {month} de ${date.getFullYear()}`}
           </p>
         </div>
         <hr />
@@ -32,7 +86,10 @@ const UserForm = () => {
               required
               maxLength={20}
               className={styles.inputFlex}
-              value={"name"}
+              value={firstName}
+              onChange={(event) => {
+                setFirstName(event.target.value);
+              }}
             />
           </FormGroup>
           <FormGroup>
@@ -45,7 +102,10 @@ const UserForm = () => {
               required
               maxLength={20}
               className={styles.inputFlex}
-              value={"test"}
+              value={lastName}
+              onChange={(event) => {
+                setLastName(event.target.value);
+              }}
             />
           </FormGroup>
         </div>
@@ -61,7 +121,10 @@ const UserForm = () => {
               placeholder="(xx) 9xxxx-xxxx"
               required
               className={styles.input}
-              value={"+55 (21) 99999-9999"}
+              value={phone}
+              onChange={(event) => {
+                setPhone(event.target.value);
+              }}
             />
           </FormGroup>
           <FormGroup>
@@ -75,7 +138,10 @@ const UserForm = () => {
               placeholder="Coloque o seu email"
               required
               className={styles.input}
-              value={"testeemail@gmail.com"}
+              value={email}
+              onChange={(event) => {
+                setEmail(event.target.value);
+              }}
             />
           </FormGroup>
 
@@ -84,6 +150,11 @@ const UserForm = () => {
           </Button>
         </div>
       </Form>
+      <ToastComponent
+        color={color}
+        isOpen={toastIsOpen}
+        message={errorMessage}
+      />
     </>
   );
 };
