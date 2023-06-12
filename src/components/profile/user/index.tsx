@@ -18,6 +18,15 @@ const UserForm = () => {
   const [created_at, setCreated_at] = useState("");
   const date = new Date(created_at);
   const month = date.toLocaleDateString("default", { month: "long" });
+  const [initials, setInitials] = useState("");
+
+  useEffect(() => {
+    profileService.fetchCurrent().then((user) => {
+      const firstNameInitial = user.firstName.slice(0, 1);
+      const lastNameInitial = user.lastName.slice(0, 1);
+      setInitials(firstNameInitial + lastNameInitial);
+    });
+  }, []);
 
   useEffect(() => {
     profileService.fetchCurrent().then((user) => {
@@ -60,7 +69,7 @@ const UserForm = () => {
     <>
       <Form onSubmit={handleUserUpdate} className={styles.form}>
         <div className={styles.formName}>
-          <p className={styles.nameAbbreviation}>NT</p>
+          <p className={styles.nameAbbreviation}>{initials}</p>
           <p className={styles.userName}>{`${firstName} ${lastName}`}</p>
         </div>
         <div className={styles.memberTime}>
@@ -71,7 +80,7 @@ const UserForm = () => {
           />
           <p className={styles.memberTimeText}>
             Membro desde <br />
-            {`${date.getDate} de {month} de ${date.getFullYear()}`}
+            {`${date.getDate()} de ${month} de ${date.getFullYear()}`}
           </p>
         </div>
         <hr />
