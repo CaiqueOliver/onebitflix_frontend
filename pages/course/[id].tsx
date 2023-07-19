@@ -26,41 +26,41 @@ const CoursePage = () => {
     }
   }, []);
 
+  const getCourse = async () => {
+    if (typeof id !== "string") return;
+    const res = await courseService.getEpisodes(id);
+    if (res.status === 200) {
+      setCourse(res.data);
+      setLiked(res.data.liked);
+      setFavorited(res.data.favorited);
+    }
+  };
+  
   useEffect(() => {
-    const getCourse = async () => {
-      if (typeof id !== "string") return;
-      const res = await courseService.getEpisodes(id);
-      if (res.status === 200) {
-        setCourse(res.data);
-        setLiked(res.data.liked);
-        setFavorited(res.data.favorited);
-      }
-    };
-
     getCourse();
   }, [id]);
 
   const handleLikeCourse = async () => {
-    if (typeof id !== "string") return;
-    if (liked) {
-      await courseService.unlike(id);
-      setLiked(false);
-    } else {
-      await courseService.like(id);
-      setLiked(true);
-    }
-  };
+		if (typeof id !== "string") return;
+		if (liked === true) {
+			await courseService.unlike(id);
+			setLiked(false);
+		} else {
+			await courseService.like(id);
+			setLiked(true);
+		}
+	};
 
   const handleFavoriteCourse = async () => {
-    if (typeof id !== "string") return;
-    if (favorited) {
-      await courseService.removeFav(id);
-      setFavorited(false);
-    } else {
-      await courseService.addToFav(id);
-      setFavorited(true);
-    }
-  };
+		if (typeof id !== "string") return;
+		if (favorited === true) {
+			await courseService.removeFav(id);
+			setFavorited(false);
+		} else {
+			await courseService.addToFav(id);
+			setFavorited(true);
+		}
+	};
 
   if (loading) {
     return <PageSpinner />;
@@ -93,7 +93,7 @@ const CoursePage = () => {
           <Button
             outline
             className={styles.courseBtn}
-            disabled={course.episodes.length === 0}
+            disabled={course?.episodes?.length === 0}
           >
             Assistir Agora!
             <img
@@ -119,13 +119,13 @@ const CoursePage = () => {
         </Container>
         <Container className={styles.episodeInfo}>
           <p className={styles.episodeDivision}>Episódios</p>
-          <p className={styles.episodeLenght}>{course.episodes.length} Episódios</p>
-          {course.episodes.length === 0 ? (
+          <p className={styles.episodeLenght}>{course?.episodes?.length} Episódios</p>
+          {course?.episodes?.length === 0 ? (
             <p>
               <strong>Não temos episódios ainda. &#x1F606;</strong>
             </p>
           ) : (
-            course.episodes.map((episode) => (
+            course?.episodes?.map((episode) => (
               <EpisodeList key={episode.id} episode={episode} course={course} />
             ))
           )}

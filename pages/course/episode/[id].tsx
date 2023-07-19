@@ -20,6 +20,7 @@ const EpisodePlayer = function () {
 	const [episodeTime, setEpisodeTime] = useState(0);
 	const [loading, setLoading] = useState(true);
 
+  const playerRef = useRef<ReactPlayer>(null);
 	useEffect(() => {
 		if (!sessionStorage.getItem("onebitflix-token")) {
 			router.push("/login");
@@ -27,12 +28,12 @@ const EpisodePlayer = function () {
 			setLoading(false);
 		}
 	}, []);
+  
 
 	if (loading) {
 		return <PageSpinner />;
 	}
 
-	const playerRef = useRef<ReactPlayer>(null);
 
 	const handleGetEpisodeTime = async () => {
 		const res = await watchEpisodeService.getWatchTime(episodeId);
